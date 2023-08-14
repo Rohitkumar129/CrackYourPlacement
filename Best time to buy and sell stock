@@ -1,0 +1,20 @@
+METHOD 1// using kadhane's algo
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        vector<int> inter;
+        int n=prices.size();
+        for(int i=1;i<n;i++){
+            inter.push_back(prices[i]-prices[i-1]);
+        }
+        inter.push_back(0);
+        int globalmax=INT_MIN,localmax=0,sum=0;
+        for(int i=0;i<n;i++){
+            sum+=inter[i];
+            localmax=max(sum,inter[i]);
+            globalmax=max(localmax,globalmax);
+            if(sum<0)sum=0;
+        }
+        return globalmax;
+    }
+};
