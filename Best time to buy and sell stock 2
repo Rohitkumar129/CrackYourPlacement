@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int helper(vector<int> &prices,vector<vector<int>> &dp,int curridx,int buy){
+        if(curridx==prices.size())return 0;
+        if(dp[curridx][buy]!=-1)return dp[curridx][buy];
+        if(buy){
+            return dp[curridx][buy]=max(0-prices[curridx]+helper(prices,dp,curridx+1,0),helper(prices,dp,curridx+1,1));
+        }
+        else{
+            return dp[curridx][buy]=max(0+prices[curridx]+helper(prices,dp,curridx+1,1),helper(prices,dp,curridx+1,0));
+        }
+    }
+    int maxProfit(vector<int>& prices) {
+        int n=prices.size();
+        vector<vector<int>>dp(n,vector<int>(2,-1));
+        return helper(prices,dp,0,1);
+    }
+};
