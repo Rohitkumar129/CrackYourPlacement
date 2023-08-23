@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int helper(int curridxw1,int curridxw2,string &word1,string &word2,vector<vector<int>>& dp){
+        if(curridxw2>=word2.size())return word1.size()-curridxw1;
+        else if(curridxw1>=word1.size())return word2.size()-curridxw2;
+        else if(dp[curridxw1][curridxw2]!=-1)return dp[curridxw1][curridxw2];
+        else if(word1[curridxw1]==word2[curridxw2])return dp[curridxw1][curridxw2]=helper(curridxw1+1,curridxw2+1,word1,word2,dp);
+                return dp[curridxw1][curridxw2]=1+min(helper(curridxw1+1,curridxw2,word1,word2,dp),min(helper(curridxw1,curridxw2+1,word1,word2,dp),helper(curridxw1+1,curridxw2+1,word1,word2,dp)));
+        }
+    int minDistance(string word1, string word2) {
+        int n=word1.size(),m=word2.size();
+        if(n==0)return m;
+        if(m==0)return n;
+        vector<vector<int>> dp(n,vector<int>(m,-1));
+        helper(0,0,word1,word2,dp);
+        return dp[0][0];
+    }
+};
